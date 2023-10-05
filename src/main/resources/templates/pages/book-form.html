@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/masterLayout :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main>
+  <h3 class="my-4">Book Form</h3>
+  <form th:action="@{${link}}" method="post" th:object="${book}">
+    <div class="form-group">
+      <input type="number" th:hidden="true" th:value="${book.id}" th:field="${book.id}">
+    </div>
+    <div class="form-group">
+      <label for="author">
+        <select id="author" class="form-control" th:field="*{author.id}">
+          <option th:each="author : ${authors}" th:text="${author.name}" th:value="${author.id}"
+                  th:selected="${book.author.id == author.id}"></option>
+        </select>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input class="form-control" th:classappend="${#fields.hasErrors('title')} ? 'isinvalid'" type="text" name="title" id="title" th:field="*{title}">
+      <small th:if="${#fields.hasErrors('title')}" class="invalid-feedback" th:errors="*{title}"></small>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input class="form-control" th:classappend="${#fields.hasErrors('price')} ? 'isinvalid'" step="any" type="number" name="price" id="price" th:field="*{price}">
+      <small th:if="${#fields.hasErrors('price')}" class="invalid-feedback" th:errors="*{price}"></small>
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">ImageUrl</label>
+      <input class="form-control" th:classappend="${#fields.hasErrors('imageUrl')} ? 'isinvalid'" type="text" name="imageUrl" id="imageUrl" th:field="*{imageUrl}">
+      <small th:if="${#fields.hasErrors('imageUrl')}" class="invalid-feedback" th:errors="*{imageUrl}"></small>
+    </div>
+    <div class="form-group">
+      <label for="publisher">Publisher</label>
+      <input class="form-control" th:classappend="${#fields.hasErrors('publisher')} ? 'isinvalid'" type="text" name="publisher" id="publisher" th:field="*{publisher}">
+      <small th:if="${#fields.hasErrors('publisher')}" class="invalid-feedback" th:errors="*{publisher}"></small>
+    </div>
+    <input type="submit" th:value="${update} ? 'Update Book':'Save Book'" class="btn btn-outline-success">
+  </form>
+</main>
+</body>
+</html>
